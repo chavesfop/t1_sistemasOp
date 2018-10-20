@@ -3,7 +3,7 @@
  * Inicializa a variavel qtdGuiches
  * @param *n &int
  */
-void iniciaAplicacao(int *n){
+void perguntarQtdGuiches(int *n){
 	printf("Informe a quantidade de guichês: ");
 	scanf("%i", n);
 }
