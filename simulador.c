@@ -23,5 +23,4 @@ void simulacao(tipo_elementoFila *fila1, tipo_elementoFila *fila2, tipo_elemento
 				break;
 		}
 	}
-	//return fila;
 }

@@ -1,5 +1,11 @@
 # Trabalho 1 - Sistemas Operacionais - UFSC - INE6511-04238A/B(20182)
 
+```
+Compilando: gcc main.c -pthread
+Executando: ./a.out qtdGuiches #onde qtdGuiches é um inteiro maior que zero
+```
+
+
 ## Descrição do Problema
 O objetivo deste trabalho é o estudante aplicar os conceitos de pthreads, exclusão mútua e escalonamento de tarefas por meio de uma simulação de um sistema de gerenciamento de atendimento.
 

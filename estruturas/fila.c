@@ -3,8 +3,6 @@
 #include <pthread.h>
 #define MALLOC(x) ((x *) malloc (sizeof(x)))
 
-//adicionar o lock na lista.
-//
 //declaração da estrutura
 struct elementoFila{
    int prioridade, contador;
@@ -19,7 +17,7 @@ pthread_mutex_t trancaFila = PTHREAD_MUTEX_INITIALIZER;
 tipo_elementoFila *criarFila(tipo_elementoFila *lista);
 tipo_elementoFila *enfileirar(tipo_elementoFila *lista, int prioridade, int contador);
 tipo_elementoFila *proximo(tipo_elementoFila *lista);
-int exibir(tipo_elementoFila *lista);
+void exibir(tipo_elementoFila *lista);
 int qtdElementos(tipo_elementoFila *lista);
 
 tipo_elementoFila *criarFila(tipo_elementoFila *lista){
@@ -46,22 +44,36 @@ tipo_elementoFila *enfileirar(tipo_elementoFila *lista, int prioridade, int cont
 	tipo_elementoFila *aux;
 	aux = lista;
 	novo = MALLOC(tipo_elementoFila);
-	while (aux->proximo!=NULL)
-		aux=aux->proximo;
 	novo->proximo = NULL;
 	novo->prioridade = prioridade;
 	novo->contador = contador;
-	aux->proximo=novo;
+	if (qtdElementos(lista) > 0){
+	    while(aux->proximo != NULL)
+		    aux = aux->proximo;
+	    aux->proximo = novo;
+	}else{
+	    lista = novo;
+	}
 	pthread_mutex_unlock(&trancaFila);
 	return lista;
 };
+tipo_elementoFila *desenfileirar(tipo_elementoFila *lista, int prioridade, int *contador){
+	pthread_mutex_lock(&trancaFila);
+	tipo_elementoFila *aux;
+	aux = lista->proximo;
+	free(lista);
+	(*contador)++;
+	pthread_mutex_unlock(&trancaFila);
+	return aux;
+};
 
-int exibir(tipo_elementoFila *lista){
+
+void exibir(tipo_elementoFila *lista){
 	tipo_elementoFila *p;
-	int k,i = 0;
+	int i = 0;
 	if (lista==NULL){
 		printf("Lista vazia\n\n");
-		return 0;
+		return;
 	}
 	p = lista;
 	do {
@@ -70,7 +82,6 @@ int exibir(tipo_elementoFila *lista){
 		i++;
 	}while(p!=NULL);
 	printf("\n===================\nTem %d pessoas na fila\n\n", i);
-	return 0;
 };
 
 int qtdElementos(tipo_elementoFila *lista){
