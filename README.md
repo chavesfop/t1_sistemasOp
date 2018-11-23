@@ -1,5 +1,8 @@
 # Trabalho 1 - Sistemas Operacionais - UFSC - INE6511-04238A/B(20182)
 
+`Rodrigo Chaves`  
+`Rodolfo Dartora`  
+
 ```
 Compilando: gcc main.c -pthread
 Executando: ./a.out qtdGuiches #onde qtdGuiches é um inteiro maior que zero
